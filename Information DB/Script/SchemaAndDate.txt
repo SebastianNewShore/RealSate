@@ -1,0 +1,557 @@
+USE [master]
+GO
+
+/****** Object:  Database [dbRealState]    Script Date: 1/6/2022 11:49:41 AM ******/
+CREATE DATABASE [dbRealState]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'dbRealState', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\dbRealState.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'dbRealState_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\dbRealState_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+GO
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [dbRealState].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+ALTER DATABASE [dbRealState] SET ANSI_NULL_DEFAULT OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET ANSI_NULLS OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET ANSI_PADDING OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET ANSI_WARNINGS OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET ARITHABORT OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET AUTO_CLOSE OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET AUTO_SHRINK OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET AUTO_UPDATE_STATISTICS ON 
+GO
+
+ALTER DATABASE [dbRealState] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET CURSOR_DEFAULT  GLOBAL 
+GO
+
+ALTER DATABASE [dbRealState] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET NUMERIC_ROUNDABORT OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET QUOTED_IDENTIFIER OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET RECURSIVE_TRIGGERS OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET  DISABLE_BROKER 
+GO
+
+ALTER DATABASE [dbRealState] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET TRUSTWORTHY OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET PARAMETERIZATION SIMPLE 
+GO
+
+ALTER DATABASE [dbRealState] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET HONOR_BROKER_PRIORITY OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET RECOVERY SIMPLE 
+GO
+
+ALTER DATABASE [dbRealState] SET  MULTI_USER 
+GO
+
+ALTER DATABASE [dbRealState] SET PAGE_VERIFY CHECKSUM  
+GO
+
+ALTER DATABASE [dbRealState] SET DB_CHAINING OFF 
+GO
+
+ALTER DATABASE [dbRealState] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+
+ALTER DATABASE [dbRealState] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+
+ALTER DATABASE [dbRealState] SET DELAYED_DURABILITY = DISABLED 
+GO
+
+ALTER DATABASE [dbRealState] SET QUERY_STORE = OFF
+GO
+
+ALTER DATABASE [dbRealState] SET  READ_WRITE 
+GO
+USE [dbRealState]
+GO
+/****** Object:  Table [dbo].[tbCategory]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbCategory](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Description] [varchar](200) NULL,
+	[Enabled] [tinyint] NOT NULL,
+ CONSTRAINT [PK_tbCategory] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbCity]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbCity](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Description] [varchar](200) NULL,
+	[Enabled] [tinyint] NOT NULL,
+	[IdRegion] [int] NOT NULL,
+ CONSTRAINT [PK_tbCity] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbCountry]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbCountry](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Description] [varchar](200) NULL,
+	[Enabled] [tinyint] NOT NULL,
+ CONSTRAINT [PK_tbCountry] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbCustomer]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbCustomer](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[DocumentNumber] [varchar](20) NOT NULL,
+	[BirthDate] [date] NULL,
+	[Adress] [varchar](100) NULL,
+	[Photo] [varbinary](max) NULL,
+	[CellPhone] [varchar](20) NULL,
+	[Email] [varchar](50) NOT NULL,
+	[Password] [varbinary](100) NOT NULL,
+	[IdDocument] [int] NOT NULL,
+	[IdGender] [int] NOT NULL,
+	[IdCity] [int] NOT NULL,
+ CONSTRAINT [PK_tbCustomer] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbDocument]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbDocument](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Description] [varchar](200) NULL,
+	[Enabled] [tinyint] NOT NULL,
+ CONSTRAINT [PK_tbDocument] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbEmployee]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbEmployee](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[DocumentNumber] [varchar](20) NOT NULL,
+	[BirthDate] [date] NULL,
+	[CellPhone] [varchar](20) NULL,
+	[Email] [varchar](20) NULL,
+	[Enabled] [tinyint] NOT NULL,
+	[IdDocument] [int] NOT NULL,
+	[IdPosition] [int] NOT NULL,
+	[IdGender] [int] NOT NULL,
+	[IdCity] [int] NOT NULL,
+ CONSTRAINT [PK_tbEmployee] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbGender]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbGender](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Description] [varchar](200) NULL,
+	[Enabled] [tinyint] NOT NULL,
+ CONSTRAINT [PK_tbGender] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbImage]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbImage](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[File] [varchar](50) NOT NULL,
+	[Date] [date] NOT NULL,
+	[Enabled] [tinyint] NOT NULL,
+	[IdProperty] [int] NOT NULL,
+ CONSTRAINT [PK_tbImage] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbOwner]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbOwner](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[DocumentNumber] [varchar](20) NOT NULL,
+	[BirthDate] [date] NULL,
+	[Adress] [varchar](100) NULL,
+	[Photo] [varbinary](max) NULL,
+	[CellPhone] [varchar](20) NULL,
+	[Email] [varchar](50) NOT NULL,
+	[Password] [varbinary](100) NOT NULL,
+	[Enabled] [tinyint] NOT NULL,
+	[IdDocument] [int] NOT NULL,
+	[IdGender] [int] NOT NULL,
+	[IdCity] [int] NOT NULL,
+ CONSTRAINT [PK_tbOwner] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbPosition]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbPosition](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Description] [varchar](200) NULL,
+	[Enabled] [tinyint] NOT NULL,
+ CONSTRAINT [PK_tbPosition] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbProperty]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbProperty](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Code] [varchar](50) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Adress] [varchar](50) NOT NULL,
+	[InternalValue] [money] NOT NULL,
+	[Description] [varchar](200) NULL,
+	[PublicationDate] [date] NOT NULL,
+	[Area] [int] NOT NULL,
+	[Rooms] [int] NOT NULL,
+	[Bathrooms] [int] NOT NULL,
+	[Garages] [int] NOT NULL,
+	[DateInformationUpdate] [date] NOT NULL,
+	[IdOwner] [int] NOT NULL,
+	[IdCategory] [int] NOT NULL,
+ CONSTRAINT [PK_tbProperty] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbPropertyTrace]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbPropertyTrace](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Value] [money] NULL,
+	[Tax] [decimal](18, 2) NULL,
+	[IdStateProperty] [int] NOT NULL,
+	[IdEmployee] [int] NULL,
+	[IdCustomer] [int] NOT NULL,
+	[IdProperty] [int] NOT NULL,
+ CONSTRAINT [PK_tbPropertyTrace] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbRegion]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbRegion](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [varchar](50) NOT NULL,
+	[Description] [varchar](200) NULL,
+	[Enabled] [tinyint] NOT NULL,
+	[IdCountry] [int] NOT NULL,
+ CONSTRAINT [PK_tbRegion] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbStateProperty]    Script Date: 1/10/2022 12:53:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbStateProperty](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Description] [varchar](200) NULL,
+	[Enabled] [tinyint] NOT NULL,
+ CONSTRAINT [PK_tbStateProperty] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[tbCategory] ON 
+
+INSERT [dbo].[tbCategory] ([Id], [Name], [Description], [Enabled]) VALUES (2, N'House', NULL, 1)
+INSERT [dbo].[tbCategory] ([Id], [Name], [Description], [Enabled]) VALUES (3, N'Apartment', NULL, 1)
+INSERT [dbo].[tbCategory] ([Id], [Name], [Description], [Enabled]) VALUES (5, N'Farm', NULL, 0)
+INSERT [dbo].[tbCategory] ([Id], [Name], [Description], [Enabled]) VALUES (6, N'Room', NULL, 0)
+INSERT [dbo].[tbCategory] ([Id], [Name], [Description], [Enabled]) VALUES (7, N'Office', NULL, 1)
+SET IDENTITY_INSERT [dbo].[tbCategory] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbCity] ON 
+
+INSERT [dbo].[tbCity] ([Id], [Name], [Description], [Enabled], [IdRegion]) VALUES (4, N'Atlanta', NULL, 1, 9)
+SET IDENTITY_INSERT [dbo].[tbCity] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbCountry] ON 
+
+INSERT [dbo].[tbCountry] ([Id], [Name], [Description], [Enabled]) VALUES (1, N'United States', NULL, 1)
+SET IDENTITY_INSERT [dbo].[tbCountry] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbCustomer] ON 
+
+INSERT [dbo].[tbCustomer] ([Id], [Name], [LastName], [DocumentNumber], [BirthDate], [Adress], [Photo], [CellPhone], [Email], [Password], [IdDocument], [IdGender], [IdCity]) VALUES (1, N'Sebastian', N'Castano Grajales', N'1053847746', CAST(N'1989-01-06' AS Date), N'cra 7 # 56 - 24', NULL, N'3108238608', N'sebas1929casta@gmail.com', 0x02000000C1AC56A33D55724415B1386F1987DBB3C2DC31F49C87D394DCFC339E534327EEF88EA80B3FA1DDF966B9315E2B78B9F4, 2, 1, 4)
+SET IDENTITY_INSERT [dbo].[tbCustomer] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbDocument] ON 
+
+INSERT [dbo].[tbDocument] ([Id], [Name], [Description], [Enabled]) VALUES (1, N'Passport Card', NULL, 1)
+INSERT [dbo].[tbDocument] ([Id], [Name], [Description], [Enabled]) VALUES (2, N'Green Card', NULL, 1)
+SET IDENTITY_INSERT [dbo].[tbDocument] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbEmployee] ON 
+
+INSERT [dbo].[tbEmployee] ([Id], [Name], [LastName], [DocumentNumber], [BirthDate], [CellPhone], [Email], [Enabled], [IdDocument], [IdPosition], [IdGender], [IdCity]) VALUES (1, N'Carlos', N'Perez', N'1054657812', CAST(N'1996-01-06' AS Date), N'313645876', N'Carlos@gmail.com', 1, 2, 1, 1, 4)
+SET IDENTITY_INSERT [dbo].[tbEmployee] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbGender] ON 
+
+INSERT [dbo].[tbGender] ([Id], [Name], [Description], [Enabled]) VALUES (1, N'Male', NULL, 1)
+INSERT [dbo].[tbGender] ([Id], [Name], [Description], [Enabled]) VALUES (2, N'Female', NULL, 2)
+SET IDENTITY_INSERT [dbo].[tbGender] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbImage] ON 
+
+INSERT [dbo].[tbImage] ([Id], [File], [Date], [Enabled], [IdProperty]) VALUES (1, N'test', CAST(N'2022-01-06' AS Date), 1, 1)
+INSERT [dbo].[tbImage] ([Id], [File], [Date], [Enabled], [IdProperty]) VALUES (2, N'test2', CAST(N'2022-01-06' AS Date), 1, 1)
+INSERT [dbo].[tbImage] ([Id], [File], [Date], [Enabled], [IdProperty]) VALUES (3, N'test3', CAST(N'2022-01-06' AS Date), 1, 1)
+INSERT [dbo].[tbImage] ([Id], [File], [Date], [Enabled], [IdProperty]) VALUES (4, N'test4', CAST(N'2022-01-06' AS Date), 0, 1)
+INSERT [dbo].[tbImage] ([Id], [File], [Date], [Enabled], [IdProperty]) VALUES (5, N'test5', CAST(N'2022-01-06' AS Date), 1, 1)
+SET IDENTITY_INSERT [dbo].[tbImage] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbOwner] ON 
+
+INSERT [dbo].[tbOwner] ([Id], [Name], [LastName], [DocumentNumber], [BirthDate], [Adress], [Photo], [CellPhone], [Email], [Password], [Enabled], [IdDocument], [IdGender], [IdCity]) VALUES (1, N'Paula', N'Cardenas', N'75673765', CAST(N'1972-01-06' AS Date), N'Atlanta cra 34 #12 - 64', NULL, N'311256748', N'Paula@gmail.com', 0x02000000EE272E180D711D74C1555D468C217588BD7E8D33E867EF8800B2F7072154F9A36FE4C60EBEC540A44188086B885D9CDE, 1, 2, 2, 4)
+SET IDENTITY_INSERT [dbo].[tbOwner] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbPosition] ON 
+
+INSERT [dbo].[tbPosition] ([Id], [Name], [Description], [Enabled]) VALUES (1, N'Administrator', NULL, 1)
+SET IDENTITY_INSERT [dbo].[tbPosition] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbProperty] ON 
+
+INSERT [dbo].[tbProperty] ([Id], [Code], [Name], [Adress], [InternalValue], [Description], [PublicationDate], [Area], [Rooms], [Bathrooms], [Garages], [DateInformationUpdate], [IdOwner], [IdCategory]) VALUES (1, N'XXW0345', N'House in atlanta', N'Atlanta cra 45 # 34 - 73', 300000.0000, NULL, CAST(N'2022-01-06' AS Date), 6200, 4, 6, 2, CAST(N'2022-01-06' AS Date), 1, 2)
+SET IDENTITY_INSERT [dbo].[tbProperty] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbPropertyTrace] ON 
+
+INSERT [dbo].[tbPropertyTrace] ([Id], [Value], [Tax], [IdStateProperty], [IdEmployee], [IdCustomer], [IdProperty]) VALUES (1, 450000.0000, CAST(19.00 AS Decimal(18, 2)), 1, NULL, 1, 1)
+SET IDENTITY_INSERT [dbo].[tbPropertyTrace] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbRegion] ON 
+
+INSERT [dbo].[tbRegion] ([Id], [name], [Description], [Enabled], [IdCountry]) VALUES (9, N'Georgia', NULL, 1, 1)
+SET IDENTITY_INSERT [dbo].[tbRegion] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbStateProperty] ON 
+
+INSERT [dbo].[tbStateProperty] ([Id], [Name], [Description], [Enabled]) VALUES (1, N'Information request', NULL, 1)
+INSERT [dbo].[tbStateProperty] ([Id], [Name], [Description], [Enabled]) VALUES (2, N'In process of sale', NULL, 1)
+INSERT [dbo].[tbStateProperty] ([Id], [Name], [Description], [Enabled]) VALUES (3, N'Property Sold', NULL, 1)
+INSERT [dbo].[tbStateProperty] ([Id], [Name], [Description], [Enabled]) VALUES (4, N'application declined', NULL, 1)
+SET IDENTITY_INSERT [dbo].[tbStateProperty] OFF
+GO
+ALTER TABLE [dbo].[tbCity]  WITH CHECK ADD  CONSTRAINT [FK_tbCity_tbRegion] FOREIGN KEY([IdRegion])
+REFERENCES [dbo].[tbRegion] ([Id])
+GO
+ALTER TABLE [dbo].[tbCity] CHECK CONSTRAINT [FK_tbCity_tbRegion]
+GO
+ALTER TABLE [dbo].[tbCustomer]  WITH CHECK ADD  CONSTRAINT [FK_tbCustomer_tbCity] FOREIGN KEY([IdCity])
+REFERENCES [dbo].[tbCity] ([Id])
+GO
+ALTER TABLE [dbo].[tbCustomer] CHECK CONSTRAINT [FK_tbCustomer_tbCity]
+GO
+ALTER TABLE [dbo].[tbCustomer]  WITH CHECK ADD  CONSTRAINT [FK_tbCustomer_tbDocument] FOREIGN KEY([IdDocument])
+REFERENCES [dbo].[tbDocument] ([Id])
+GO
+ALTER TABLE [dbo].[tbCustomer] CHECK CONSTRAINT [FK_tbCustomer_tbDocument]
+GO
+ALTER TABLE [dbo].[tbCustomer]  WITH CHECK ADD  CONSTRAINT [FK_tbCustomer_tbGender] FOREIGN KEY([IdGender])
+REFERENCES [dbo].[tbGender] ([Id])
+GO
+ALTER TABLE [dbo].[tbCustomer] CHECK CONSTRAINT [FK_tbCustomer_tbGender]
+GO
+ALTER TABLE [dbo].[tbEmployee]  WITH CHECK ADD  CONSTRAINT [FK_tbEmployee_tbCity] FOREIGN KEY([IdCity])
+REFERENCES [dbo].[tbCity] ([Id])
+GO
+ALTER TABLE [dbo].[tbEmployee] CHECK CONSTRAINT [FK_tbEmployee_tbCity]
+GO
+ALTER TABLE [dbo].[tbEmployee]  WITH CHECK ADD  CONSTRAINT [FK_tbEmployee_tbDocument] FOREIGN KEY([IdDocument])
+REFERENCES [dbo].[tbDocument] ([Id])
+GO
+ALTER TABLE [dbo].[tbEmployee] CHECK CONSTRAINT [FK_tbEmployee_tbDocument]
+GO
+ALTER TABLE [dbo].[tbEmployee]  WITH CHECK ADD  CONSTRAINT [FK_tbEmployee_tbGender] FOREIGN KEY([IdGender])
+REFERENCES [dbo].[tbGender] ([Id])
+GO
+ALTER TABLE [dbo].[tbEmployee] CHECK CONSTRAINT [FK_tbEmployee_tbGender]
+GO
+ALTER TABLE [dbo].[tbEmployee]  WITH CHECK ADD  CONSTRAINT [FK_tbEmployee_tbPosition] FOREIGN KEY([IdPosition])
+REFERENCES [dbo].[tbPosition] ([Id])
+GO
+ALTER TABLE [dbo].[tbEmployee] CHECK CONSTRAINT [FK_tbEmployee_tbPosition]
+GO
+ALTER TABLE [dbo].[tbImage]  WITH CHECK ADD  CONSTRAINT [FK_tbImage_tbProperty] FOREIGN KEY([IdProperty])
+REFERENCES [dbo].[tbProperty] ([Id])
+GO
+ALTER TABLE [dbo].[tbImage] CHECK CONSTRAINT [FK_tbImage_tbProperty]
+GO
+ALTER TABLE [dbo].[tbOwner]  WITH CHECK ADD  CONSTRAINT [FK_tbOwner_tbCity] FOREIGN KEY([IdCity])
+REFERENCES [dbo].[tbCity] ([Id])
+GO
+ALTER TABLE [dbo].[tbOwner] CHECK CONSTRAINT [FK_tbOwner_tbCity]
+GO
+ALTER TABLE [dbo].[tbOwner]  WITH CHECK ADD  CONSTRAINT [FK_tbOwner_tbDocument] FOREIGN KEY([IdDocument])
+REFERENCES [dbo].[tbDocument] ([Id])
+GO
+ALTER TABLE [dbo].[tbOwner] CHECK CONSTRAINT [FK_tbOwner_tbDocument]
+GO
+ALTER TABLE [dbo].[tbOwner]  WITH CHECK ADD  CONSTRAINT [FK_tbOwner_tbGender] FOREIGN KEY([IdGender])
+REFERENCES [dbo].[tbGender] ([Id])
+GO
+ALTER TABLE [dbo].[tbOwner] CHECK CONSTRAINT [FK_tbOwner_tbGender]
+GO
+ALTER TABLE [dbo].[tbProperty]  WITH CHECK ADD  CONSTRAINT [FK_tbProperty_tbCategory] FOREIGN KEY([IdCategory])
+REFERENCES [dbo].[tbCategory] ([Id])
+GO
+ALTER TABLE [dbo].[tbProperty] CHECK CONSTRAINT [FK_tbProperty_tbCategory]
+GO
+ALTER TABLE [dbo].[tbProperty]  WITH CHECK ADD  CONSTRAINT [FK_tbProperty_tbOwner] FOREIGN KEY([IdOwner])
+REFERENCES [dbo].[tbOwner] ([Id])
+GO
+ALTER TABLE [dbo].[tbProperty] CHECK CONSTRAINT [FK_tbProperty_tbOwner]
+GO
+ALTER TABLE [dbo].[tbPropertyTrace]  WITH CHECK ADD  CONSTRAINT [FK_tbPropertyTrace_tbCustomer] FOREIGN KEY([IdCustomer])
+REFERENCES [dbo].[tbCustomer] ([Id])
+GO
+ALTER TABLE [dbo].[tbPropertyTrace] CHECK CONSTRAINT [FK_tbPropertyTrace_tbCustomer]
+GO
+ALTER TABLE [dbo].[tbPropertyTrace]  WITH CHECK ADD  CONSTRAINT [FK_tbPropertyTrace_tbEmployee] FOREIGN KEY([IdEmployee])
+REFERENCES [dbo].[tbEmployee] ([Id])
+GO
+ALTER TABLE [dbo].[tbPropertyTrace] CHECK CONSTRAINT [FK_tbPropertyTrace_tbEmployee]
+GO
+ALTER TABLE [dbo].[tbPropertyTrace]  WITH CHECK ADD  CONSTRAINT [FK_tbPropertyTrace_tbProperty] FOREIGN KEY([IdProperty])
+REFERENCES [dbo].[tbProperty] ([Id])
+GO
+ALTER TABLE [dbo].[tbPropertyTrace] CHECK CONSTRAINT [FK_tbPropertyTrace_tbProperty]
+GO
+ALTER TABLE [dbo].[tbPropertyTrace]  WITH CHECK ADD  CONSTRAINT [FK_tbPropertyTrace_tbStateProperty] FOREIGN KEY([IdStateProperty])
+REFERENCES [dbo].[tbStateProperty] ([Id])
+GO
+ALTER TABLE [dbo].[tbPropertyTrace] CHECK CONSTRAINT [FK_tbPropertyTrace_tbStateProperty]
+GO
+ALTER TABLE [dbo].[tbRegion]  WITH CHECK ADD  CONSTRAINT [FK_tbRegion_tbCountry] FOREIGN KEY([IdCountry])
+REFERENCES [dbo].[tbCountry] ([Id])
+GO
+ALTER TABLE [dbo].[tbRegion] CHECK CONSTRAINT [FK_tbRegion_tbCountry]
+GO
