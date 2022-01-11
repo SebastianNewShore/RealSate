@@ -167,22 +167,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\dbRealState.cs" />
-    <Compile Include="Models\sysdiagram.cs" />
-    <Compile Include="Models\tbCategory.cs" />
-    <Compile Include="Models\tbCity.cs" />
-    <Compile Include="Models\tbCountry.cs" />
-    <Compile Include="Models\tbCustomer.cs" />
-    <Compile Include="Models\tbDocument.cs" />
-    <Compile Include="Models\tbEmployee.cs" />
-    <Compile Include="Models\tbGender.cs" />
-    <Compile Include="Models\tbImage.cs" />
-    <Compile Include="Models\tbOwner.cs" />
-    <Compile Include="Models\tbPosition.cs" />
-    <Compile Include="Models\tbProperty.cs" />
-    <Compile Include="Models\tbPropertyTrace.cs" />
-    <Compile Include="Models\tbRegion.cs" />
-    <Compile Include="Models\tbStateProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
