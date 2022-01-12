@@ -8,7 +8,7 @@ namespace ApiRealState.Models.ModelDB
     public partial class dbRealState : DbContext
     {
         public dbRealState()
-            : base("name=dbRealState1")
+            : base("name=dbRealState")
         {
         }
 

@@ -162,11 +162,30 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Constants\Constants.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelApplication\PropertyModel.cs" />
+    <Compile Include="Models\ModelDB\dbRealState.cs" />
+    <Compile Include="Models\ModelDB\sysdiagram.cs" />
+    <Compile Include="Models\ModelDB\tbCategory.cs" />
+    <Compile Include="Models\ModelDB\tbCity.cs" />
+    <Compile Include="Models\ModelDB\tbCountry.cs" />
+    <Compile Include="Models\ModelDB\tbCustomer.cs" />
+    <Compile Include="Models\ModelDB\tbDocument.cs" />
+    <Compile Include="Models\ModelDB\tbEmployee.cs" />
+    <Compile Include="Models\ModelDB\tbGender.cs" />
+    <Compile Include="Models\ModelDB\tbImage.cs" />
+    <Compile Include="Models\ModelDB\tbOwner.cs" />
+    <Compile Include="Models\ModelDB\tbPosition.cs" />
+    <Compile Include="Models\ModelDB\tbProperty.cs" />
+    <Compile Include="Models\ModelDB\tbPropertyTrace.cs" />
+    <Compile Include="Models\ModelDB\tbRegion.cs" />
+    <Compile Include="Models\ModelDB\tbStateProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -222,7 +241,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
