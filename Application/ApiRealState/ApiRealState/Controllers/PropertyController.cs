@@ -60,7 +60,6 @@ namespace ApiRealState.Controllers
                     ModelState.AddModelError(Constants.Constants.Error, ex);
                 }
             }
-
             return property;
         }
 
@@ -84,6 +83,7 @@ namespace ApiRealState.Controllers
                             db.tbImages.Add(image);
                         }
 
+                        db.SaveChanges();
                         SaveImages(propertyModel.Images, propertyModel.Code);
 
                         return request.CreateResponse(HttpStatusCode.OK);
@@ -164,7 +164,6 @@ namespace ApiRealState.Controllers
             {
                 ModelState.AddModelError(Constants.Constants.Error, ex);
             }
-
             return property;
         }
 
@@ -190,7 +189,6 @@ namespace ApiRealState.Controllers
             {
                 ModelState.AddModelError(Constants.Constants.Error, ex);
             }
-
             return images;
         }
 
