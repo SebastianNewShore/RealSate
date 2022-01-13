@@ -9,12 +9,15 @@ using ApiRealState.Models.ModelApplication;
 using System.IO;
 using System.Web.UI.WebControls;
 using static System.Net.Mime.MediaTypeNames;
+using System.Web.Mvc;
+using System.Net.Http;
+using System.Net;
 
 namespace ApiRealState.Controllers
 {
     public class PropertyController : ApiController
     {
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public object GetProperty(string area, string value, string rooms, string bathrooms, string Garages)
         {
             var property = new object();
@@ -22,18 +25,18 @@ namespace ApiRealState.Controllers
             {
                 try
                 {
-                    var a = area != null ? area.Split(',') : new string[0];
-                    var v = value != null ? value.Split(',') : new string[0];
-                    var r = rooms != null ? rooms.Split(',') : new string[0];
-                    var b = bathrooms != null ? bathrooms.Split(',') : new string[0];
-                    var g = Garages != null ? Garages.Split(',') : new string[0];
+                    var a = area != null ? area.Split(',') : null;
+                    var v = value != null ? value.Split(',') : null;
+                    var r = rooms != null ? rooms.Split(',') : null;
+                    var b = bathrooms != null ? bathrooms.Split(',') : null;
+                    var g = Garages != null ? Garages.Split(',') : null;
 
-                    property = (from p in db.tbProperties
-                                //where (p.Area >= a[0] && p.Area <= a[1]) &&
-                                //      (p.InternalValue >= v[0] && p.InternalValue <= v[1]) &&
-                                //      (p.Rooms >= r[0] && p.Rooms <= r[1]) &&
-                                //      (p.Bathrooms >= b[0] && p.Bathrooms <= b[1]) &&
-                                //      (p.Garages >= g[0] && p.Garages <= g[1])
+                    property = (from p in db.tbProperties.AsEnumerable()
+                                where (a == null || (p.Area >= int.Parse(a[0]) && p.Area <= int.Parse(a[1]))) &&
+                                      (v == null || (p.InternalValue >= int.Parse(v[0]) && p.InternalValue <= int.Parse(v[1]))) &&
+                                      (r == null || (p.Rooms >= int.Parse(r[0]) && p.Rooms <= int.Parse(r[1]))) &&
+                                      (b == null || (p.Bathrooms >= int.Parse(b[0]) && p.Bathrooms <= int.Parse(b[1]))) &&
+                                      (g == null || (p.Garages >= int.Parse(g[0]) && p.Garages <= int.Parse(g[1])))
                                 select new
                                 {
                                     p.Code,
@@ -62,13 +65,14 @@ namespace ApiRealState.Controllers
             return property;
         }
 
-        [HttpPost]
-        public void CreateProperty(PropertyModel propertyModel)
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage CreateProperty(PropertyModel propertyModel)
         {
             using (dbRealState db = new dbRealState())
             {
+                var request = new HttpRequestMessage();
                 try
-                {
+                {                  
                     if (!db.tbProperties.Any(x => x.Code == propertyModel.Code))
                     {
                         var property = Property(propertyModel);
@@ -76,29 +80,32 @@ namespace ApiRealState.Controllers
 
                         SaveDatabase(property, images);
                         SaveImages(propertyModel.Images, propertyModel.Code);
+
+                        return request.CreateResponse(HttpStatusCode.OK);
                     }
                     else
                     {
-                            ModelState.AddModelError("", Constants.Constants.PropertyExist);
+                        return request.CreateResponse(HttpStatusCode.NotModified);
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError(Constants.Constants.Error, ex);
+                    return request.CreateResponse(HttpStatusCode.InternalServerError);
                 }
             }
         }
 
-        [HttpPut]
-        public void UpdateProperty(int id,PropertyModel propertyModel)
+        [System.Web.Http.HttpPut]
+        public HttpResponseMessage UpdateProperty(int id, PropertyModel propertyModel)
         {
             using (dbRealState db = new dbRealState())
             {
+                var request = new HttpRequestMessage();
                 try
                 {
                     var property = Property(propertyModel);
-                    var images = Image(propertyModel,property);
+                    var images = Image(propertyModel, property);
 
                     property.Id = id;
 
@@ -113,10 +120,12 @@ namespace ApiRealState.Controllers
 
                     db.SaveChanges();
                     SaveImages(propertyModel.Images, propertyModel.Code);
+
+                    return request.CreateResponse(HttpStatusCode.OK);
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError(Constants.Constants.Error, ex);
+                    return request.CreateResponse(HttpStatusCode.InternalServerError);
                 }
             }
         }

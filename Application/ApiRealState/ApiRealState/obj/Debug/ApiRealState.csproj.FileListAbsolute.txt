@@ -175,4 +175,3 @@ C:\Users\sebastian.castano\Desktop\Prueba Million And Weelo\RealState\Applicatio
 C:\Users\sebastian.castano\Desktop\Prueba Million And Weelo\RealState\Application\ApiRealState\ApiRealState\obj\Debug\ApiRealState.csproj.CopyComplete
 C:\Users\sebastian.castano\Desktop\Prueba Million And Weelo\RealState\Application\ApiRealState\ApiRealState\obj\Debug\ApiRealState.dll
 C:\Users\sebastian.castano\Desktop\Prueba Million And Weelo\RealState\Application\ApiRealState\ApiRealState\obj\Debug\ApiRealState.pdb
-C:\Users\sebastian.castano\Desktop\Prueba Million And Weelo\RealState\RealSate\Application\ApiRealState\ApiRealState\obj\Debug\ApiRealState.csprojAssemblyReference.cache
