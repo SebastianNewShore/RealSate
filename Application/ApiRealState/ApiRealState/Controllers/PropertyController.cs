@@ -2,14 +2,10 @@
 using System;
 using System.Linq;
 using System.Web.Http;
-using ApiRealState.Constants;
 using System.Collections.Generic;
 using System.Data.Entity;
 using ApiRealState.Models.ModelApplication;
 using System.IO;
-using System.Web.UI.WebControls;
-using static System.Net.Mime.MediaTypeNames;
-using System.Web.Mvc;
 using System.Net.Http;
 using System.Net;
 
@@ -17,6 +13,9 @@ namespace ApiRealState.Controllers
 {
     public class PropertyController : ApiController
     {
+        ///<summary>
+        ///Method to obtain information of all the properties with different search filters.
+        ///</summary>
         [System.Web.Http.HttpGet]
         public object GetProperty(string area, string value, string rooms, string bathrooms, string Garages)
         {
@@ -65,6 +64,9 @@ namespace ApiRealState.Controllers
             return property;
         }
 
+        ///<summary>
+        ///Create a new property and the images associated with it.
+        ///</summary>
         [System.Web.Http.HttpPost]
         public HttpResponseMessage CreateProperty(PropertyModel propertyModel)
         {
@@ -75,10 +77,13 @@ namespace ApiRealState.Controllers
                 {                  
                     if (!db.tbProperties.Any(x => x.Code == propertyModel.Code))
                     {
-                        var property = Property(propertyModel);
-                        var images = Image(propertyModel, property);
 
-                        SaveDatabase(property, images);
+                        db.tbProperties.Add(Property(propertyModel));
+                        foreach (var image in Image(propertyModel, Property(propertyModel)))
+                        {
+                            db.tbImages.Add(image);
+                        }
+
                         SaveImages(propertyModel.Images, propertyModel.Code);
 
                         return request.CreateResponse(HttpStatusCode.OK);
@@ -96,6 +101,9 @@ namespace ApiRealState.Controllers
             }
         }
 
+        ///<summary>
+        ///Update property and the images associated with it.
+        ///</summary>
         [System.Web.Http.HttpPut]
         public HttpResponseMessage UpdateProperty(int id, PropertyModel propertyModel)
         {
@@ -130,6 +138,9 @@ namespace ApiRealState.Controllers
             }
         }
 
+        ///<summary>
+        ///construct object to save or update a property.
+        ///</summary>
         private tbProperty Property(PropertyModel propertyModel)
         {
             var property = new tbProperty();
@@ -157,6 +168,9 @@ namespace ApiRealState.Controllers
             return property;
         }
 
+        ///<summary>
+        ///construct object to save or update a Images.
+        ///</summary>
         private List<tbImage> Image(PropertyModel propertyModel, tbProperty property)
         {
             var images = new List<tbImage>();
@@ -180,6 +194,9 @@ namespace ApiRealState.Controllers
             return images;
         }
 
+        ///<summary>
+        ///Create folder and save images of the property.
+        ///</summary>
         private void SaveImages(Dictionary<string, string> images, string code)
         {
             try
@@ -197,27 +214,6 @@ namespace ApiRealState.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError(Constants.Constants.Error, ex);
-            }
-        }
-
-        private void SaveDatabase(tbProperty property, List<tbImage> images )
-        {
-            using (dbRealState db = new dbRealState())
-            {
-                try
-                {
-                    db.tbProperties.Add(property);
-                    foreach (var image in images)
-                    {
-                        db.tbImages.Add(image);
-                    }
-
-                   db.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(Constants.Constants.Error, ex);
-                }
             }
         }
     }
