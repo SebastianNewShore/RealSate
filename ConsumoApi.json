@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "b1baba74-7fb4-4e92-a9d1-e3ebb27ddd5e",
+		"name": "Local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetProperty",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Code\": \"sample string 2\",\r\n  \"Name\": \"sample string 2\",\r\n  \"Adress\": \"sample string 3\",\r\n  \"InternalValue\": 4.0,\r\n  \"Description\": \"sample string 5\",\r\n  \"PublicationDate\": \"2022-01-11T16:49:45.5451541-05:00\",\r\n  \"Area\": 7,\r\n  \"Rooms\": 8,\r\n  \"Bathrooms\": 9,\r\n  \"Garages\": 10,\r\n  \"DateInformationUpdate\": \"2022-01-11T16:49:45.5461574-05:00\",\r\n  \"IdOwner\": 1,\r\n  \"IdCategory\": 3,\r\n  \"Images\": {\r\n    \"sample string 1\": \"QEA=\",\r\n    \"sample string 2\": \"QEA=\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44381/api/property",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44381",
+					"path": [
+						"api",
+						"property"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateProperty",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProperty",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GenerateToken",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ApiKey\": \"UHJ1ZWJhQXBp\",\r\n    \"Signature\": \"mND1wt48kfeqhetDOi7jTEB9J6fG+rRbzHhlUAK3aqA=\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44381/Api/Token",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44381",
+					"path": [
+						"Api",
+						"Token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
