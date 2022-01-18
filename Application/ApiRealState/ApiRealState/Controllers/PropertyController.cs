@@ -8,14 +8,19 @@ using ApiRealState.Models.ModelApplication;
 using System.IO;
 using System.Net.Http;
 using System.Net;
+using ApiRealState.GenerateToken.Business;
+using AuthorizeAttribute = ApiRealState.GenerateToken.Business.AuthorizeAttribute;
 
 namespace ApiRealState.Controllers
 {
+    [Authorize]
+    [RequireHttps]
     public class PropertyController : ApiController
     {
         ///<summary>
         ///Method to obtain information of all the properties with different search filters.
         ///</summary>
+        ///
         [System.Web.Http.HttpGet]
         public object GetProperty(string area, string value, string rooms, string bathrooms, string Garages)
         {

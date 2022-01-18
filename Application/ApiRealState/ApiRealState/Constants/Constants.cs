@@ -12,5 +12,8 @@ namespace ApiRealState.Constants
         public const string folder = "Images\\Properties\\";
         public const string Extension = ".jpg";
         public const int Enabled = 1;
+        public const string token = "testApi";
+        public const string ApiKeyName = "apiKey";
+        public const string tokenName = "token";
     }
 }
